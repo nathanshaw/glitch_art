@@ -15,9 +15,9 @@ boolean show_green_map; //for displaying gradient map
 boolean show_blue_map; //for displaying gradient map
 
 void setup(){
-  size(640, 480);
+  size(1280, 720);
   
-  cam = new Capture(this, 640, 480, 60);
+  cam = new Capture(this, 1280, 720, 60);
   cam.start();
   
   //initialize buffer with empty images

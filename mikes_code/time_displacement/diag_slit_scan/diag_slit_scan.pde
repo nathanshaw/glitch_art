@@ -10,9 +10,9 @@ PImage map; //image for storing gradient map
 boolean show_map; //for displaying gradient map
 
 void setup(){
-  size(640, 480);
+  size(1280, 720);
   
-  cam = new Capture(this, 640, 480);
+  cam = new Capture(this, 1280, 720);
   cam.start();
   
   //initialize buffer with empty images
@@ -23,8 +23,6 @@ void setup(){
   //create horizontal gradient map
   map = createImage(width, height, RGB);
   map.loadPixels();
-  float chance = random(1);
-  if (chance < 0.25){
   for (int x = 0; x < map.width; x++){
     for (int y = 0; y < map.height; y++){
       int g = int(((float(x)/width) + (float(y)/height)) * 255);
@@ -33,18 +31,6 @@ void setup(){
       int argb = 255 << 24 | g << 16 | g << 8 | g; 
       map.pixels[x + y*width] = argb;
     }
-  }
-  }
-  else {
-   for (int x = map.width; x > 0; x--){
-    for (int y = map.height; y > 0; y--){
-      int g = int((float(x)/width) * 255);
-      int p = int(((float(x)/width) + (float(y)/height))/2 * 255);
-      g = int(float(g*p)*0.5);
-      int argb = 255 << 24 | g << 16 | g << 8 | g; 
-      map.pixels[x + y*width] = argb;
-    }
-  } 
   }
   map.updatePixels();
 }

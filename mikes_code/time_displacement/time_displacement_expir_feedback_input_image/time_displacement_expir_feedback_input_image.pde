@@ -2,7 +2,7 @@ import processing.video.*;
 Capture cam;
 
 //fifo buffer for storing image frames
-int num_frames = 64;
+int num_frames = 16;
 PImage queue[] = new PImage[num_frames];
 int write_idx = 0;
 
@@ -10,9 +10,9 @@ PImage map; //image for storing gradient map
 boolean show_map; //for displaying gradient map
 
 void setup(){
-  size(640, 480);
+  size(1280, 720);
   
-  cam = new Capture(this, 640, 480);
+  cam = new Capture(this, 1280, 720);
   cam.start();
   
   //initialize buffer with empty images
