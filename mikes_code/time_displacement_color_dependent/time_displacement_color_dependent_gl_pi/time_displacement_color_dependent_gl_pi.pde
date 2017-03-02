@@ -79,7 +79,14 @@ void newMaps() {
     green_map = red_map;
     blue_map = red_map;
   }
-  if (mapMode == 2) {
+    if (mapMode == 2) {
+    print("" + mapMode + " - ");
+    println("Diag Map: Single Mask");
+    red_map = makeDiagMap();
+    green_map = red_map;
+    blue_map = red_map;
+  }
+  if (mapMode == 3) {
     print("" + mapMode + " - ");
     println("Red = Hor - Green = Noise - blue = box");
     red_map = makeHorMap();
@@ -88,9 +95,19 @@ void newMaps() {
   }
 }
 
-boolean isRed(String fileName) {
-  println("PRTEND LIKE I ANALYZE : " + fileName);
-  return true;
+boolean isRed() {
+    int totalRed = 0;
+  int totalBlue = 0;
+  for (int i = 0; i < pixels.length; i++) {
+    totalRed +=  (queue[red_idx].pixels[i] >> 16)& 0xFF;
+    totalBlue +=  queue[blue_idx].pixels[i] & 0xFF;
+  };
+  if (totalRed > totalBlue) {
+    println("More red than blue");
+    return true;
+  }
+  println("More blue than red");
+  return false;
 }
 
 void saveScreenShot() {
