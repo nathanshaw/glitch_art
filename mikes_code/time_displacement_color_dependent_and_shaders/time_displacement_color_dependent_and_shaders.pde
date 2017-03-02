@@ -2,7 +2,7 @@ import processing.video.*;
 Capture cam;
 
 //fifo buffer for storing image frames
-int num_frames = 128;
+int num_frames = 32;
 int overfill_amount = 1;
 PImage queue[] = new PImage[num_frames];
 int write_idx = 0;
@@ -29,8 +29,8 @@ void setup(){
 }
 
 void newNoiseMaps(){
-  red_map = makeNoiseMap();
-  green_map = makeNoiseMap();
+  red_map = makeDiagMap();
+  green_map = makeBoxMap();
   blue_map = makeNoiseMap();  
 }
 

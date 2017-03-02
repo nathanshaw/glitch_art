@@ -2,7 +2,7 @@ import processing.video.*;
 Capture cam;
 
 //fifo buffer for storing image frames
-int num_frames = 16;
+int num_frames = 128;
 PImage queue[] = new PImage[num_frames];
 int write_idx = 0;
 

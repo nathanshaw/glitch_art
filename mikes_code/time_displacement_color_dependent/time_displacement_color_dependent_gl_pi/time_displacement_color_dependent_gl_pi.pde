@@ -96,11 +96,11 @@ void newMaps() {
 }
 
 boolean isRed() {
-    int totalRed = 0;
+  int totalRed = 0;
   int totalBlue = 0;
-  for (int i = 0; i < pixels.length; i++) {
-    totalRed +=  (queue[red_idx].pixels[i] >> 16)& 0xFF;
-    totalBlue +=  queue[blue_idx].pixels[i] & 0xFF;
+  for (color pix : pixels) {
+    totalRed +=  (pix >> 16) & 0xFF;
+    totalBlue +=  pix & 0xFF;
   };
   if (totalRed > totalBlue) {
     println("More red than blue");
