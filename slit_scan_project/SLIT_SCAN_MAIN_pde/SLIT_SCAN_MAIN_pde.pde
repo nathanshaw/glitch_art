@@ -74,8 +74,12 @@ void newMaps() {
     print("" + mapMode + " - ");
     println("Vertical Map: Single Mask");
     red_map = makeVertMap();
-    green_map = red_map;
-    blue_map = red_map;
+    green_map = makeHorMap();
+    if (random(1) < 0.5) {
+    blue_map = makeHorMap();
+    }else{
+    blue_map = makeVertMap();
+    }
   }
   if (mapMode == 3) {
     print("" + mapMode + " - ");
