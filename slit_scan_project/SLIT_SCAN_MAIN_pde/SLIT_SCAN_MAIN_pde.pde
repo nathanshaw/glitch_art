@@ -18,7 +18,7 @@ int write_idx = 0;
 
 // to determine which maps are active
 int mapMode = 0;
-int numMapModes = 6;
+int numMapModes = 8;
 
 PImage blue_map; //image for storing gradient map
 PImage green_map; //image for storing gradient map
@@ -27,23 +27,12 @@ boolean show_red_map; //for displaying gradient map
 boolean show_green_map; //for displaying gradient map
 boolean show_blue_map; //for displaying gradient map
 
+boolean color_separated = true;
+
 int screenShotNum;
 
 void setup() {
   size(1280, 720, P2D);
-  //fullScreen(P2D);
-  /*
-    String[] devices = GLCapture.list();
-   println("Devices:");
-   printArray(devices);
-   if (0 < devices.length) {
-   String[] configs = GLCapture.configs(devices[0]);
-   println("Configs:");
-   printArray(configs);
-   }
-   cam = new GLCapture(this, devices[0], 640, 360, 25);
-   cam.play();
-   */
   cam = new Capture(this, 1280, 720, 60);
   cam.start();
 
@@ -57,48 +46,146 @@ void setup() {
 
 void newMaps() {
   if (mapMode == 0) {
-    print("" + mapMode + " - ");
-    println("Perlin Noise: Independent Color Masks");
-    red_map = makeNoiseMap();
-    green_map = makeNoiseMap();
-    blue_map = makeNoiseMap();
-  }
-  if (mapMode == 1) {
-    print("" + mapMode + " - ");
-    println("Perlin Noise: Single Mask");
-    red_map = makeNoiseMap();
-    green_map = red_map;
-    blue_map = red_map;
-  }
-  if (mapMode == 2) {
-    print("" + mapMode + " - ");
-    println("Vertical Map: Single Mask");
-    red_map = makeVertMap();
-    green_map = makeHorMap();
-    if (random(1) < 0.5) {
-    blue_map = makeHorMap();
-    }else{
-    blue_map = makeVertMap();
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Perlin Noise: separated");
+      red_map = makeNoiseMap();
+      green_map = makeNoiseMap();
+      blue_map = makeNoiseMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Perlin Noise: not separated");
+      green_map = blue_map = red_map = makeNoiseMap();
     }
   }
-  if (mapMode == 3) {
-    print("" + mapMode + " - ");
-    println("Vertical Map: Multiple Mask");
-    red_map = makeVertMap();
-    green_map = makeVertMap();
-    blue_map = makeVertMap();
+  if (mapMode == 1) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Vertical Maps: separated");
+      red_map = makeVertMap();
+      green_map = makeVertMap();
+      blue_map = makeVertMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Vertical Map: not separated");
+      green_map = blue_map = red_map = makeVertMap();
+    }
   }
+  if (mapMode == 2) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Horizontal Maps: separated");
+      red_map = makeHorMap();
+      green_map = makeHorMap();
+      blue_map = makeHorMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Horizontal Maps: not separated");
+      green_map = blue_map = red_map = makeHorMap();
+    }
+  }
+  /*
+  if (mapMode == 3) {
+   if (color_separated) {
+   print("" + mapMode + " - ");
+   println("Box Masks: separated");
+   red_map = makeBoxMap();
+   green_map = makeBoxMap();
+   blue_map = makeBoxMap();
+   } else {
+   print("" + mapMode + " - ");
+   println("Box Masks: not separated");
+   green_map = blue_map = red_map = makeBoxMap();
+   }
+   }
+   */
+  if (mapMode == 3) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Double Noise - separated");
+      red_map = makeDoubleNoiseMap();
+      green_map = makeDoubleNoiseMap();
+      blue_map = makeDoubleNoiseMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Double Noise - not separated");
+      red_map = makeDoubleNoiseMap();
+      green_map = blue_map = red_map;
+    }
+  }
+  /*
   if (mapMode == 4) {
-    print("" + mapMode + " - ");
-    println("Red = Hor - Green = Noise - blue = box");
-    red_map = makeBoxMap();
-    green_map = makeBoxMap();
-    blue_map = makeBoxMap();
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Circle map - separated");
+      red_map = makeCircleMap();
+      green_map = makeCircleMap();
+      blue_map = makeCircleMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Circle map - not separated");
+      red_map = makeCircleMap();
+      green_map = blue_map = red_map;
+    }
+  }
+  */
+  if (mapMode == 4) {
+    if (!color_separated) {
+      print("" + mapMode + " - ");
+      println("Whisk map");
+      red_map = makeWhiskMap();
+      green_map = blue_map = red_map;
+    } else {
+      print("" + mapMode + " - ");
+      println("Whisk map");
+      red_map = makeWhiskMap();
+      blue_map = makeWhiskMap();
+      green_map = makeWhiskMap();
+    }
   }
   if (mapMode == 5) {
-    print("" + mapMode + " - ");
-    println("blended noise map");
-    red_map = makeDoubleNoiseMap();
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Vertical/Hor Maps: separated");
+      red_map = makeVertMap();
+      green_map = makeHorMap();
+      if (random(1) < 0.5) {
+        blue_map = makeHorMap();
+      } else {
+        blue_map = makeVertMap();
+      }
+    } else {
+      print("" + mapMode + " - ");
+      println("Vertical Map: not separated");
+      green_map = blue_map = red_map = makeVertMap();
+    }
+  }
+  if (mapMode == 6) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Feedback: separated");
+      red_map = makeCurrentFrameMap();
+      green_map = makeCurrentFrameMap();
+
+      blue_map = makeCurrentFrameMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Feedback: not separated");
+      green_map = blue_map = red_map = makeCurrentFrameMap();
+    }
+  }
+  if (mapMode == 7) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Diag Maps: separated");
+      red_map = makeDiagMap();
+      green_map = makeDiagMap();
+      blue_map = makeDiagMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Diag Maps: not separated");
+      green_map = blue_map = red_map = makeDiagMap();
+    }
   }
 }
 
@@ -209,6 +296,10 @@ void keyPressed() {
   }
   if (key == 't') {
     saveScreenShot();
+  }
+  if (key == 'c') {
+    color_separated = !color_separated;
+    newMaps();
   }
 }
 

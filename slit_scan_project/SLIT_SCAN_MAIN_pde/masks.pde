@@ -1,54 +1,129 @@
 
-PImage makeHorMap() {
+PImage makeCircleMap() {
+  PImage cMap = createImage(width, height, RGB);
+  cMap.loadPixels();
+  for (int x = 0; x < cMap.width; x++) {
+    int factor = int(random(256));
+    for (int y = 0; y < cMap.height; y++) {
+      int step = int((float(x)/cMap.width)*factor) + int((float(y)/cMap.height)*127);
+      if (x%2 == 1) {
+        cMap.pixels[x + y*width] = 255 << 24 | step << 16 | step << 8 | step;
+      } else {
+        cMap.pixels[x*height + y] = 255 << 24 | step << 16 | step << 8 | step;
+      }
+    }
+  }
+  cMap.updatePixels();
+  return cMap;
+}
+
+PImage makeWhiskMap() {
+  PImage cMap = createImage(width, height, RGB);
+  cMap.loadPixels();
+  for (int x = 0; x < cMap.width; x++) {
+    int factor = int(random(256));
+    for (int y = 0; y < cMap.height; y++) {
+      int step = int((float(x)/cMap.width)*factor) + int((float(y)/cMap.height)*127);
+      cMap.pixels[x*height + y] = 255 << 24 | step << 16 | step << 8 | step;
+    }
+  }
+  cMap.updatePixels();
+  return cMap;
+}
+
+PImage makeTVVisionMap() {
   //create horizontal gradient map
+  int direction = int(random(2));
+  println(direction);
   PImage hmap = createImage(width, height, RGB);
   hmap.loadPixels();
+  int time_length = int(random(70, 256));
+  int random_amount = 1;
+  if (random(10) < 2) {
+    random_amount = int(random(0, 10));
+  }
   for (int x = 0; x < hmap.width; x++) {
     for (int y = 0; y < hmap.height; y++) {
-      int g = int((float(x)/hmap.width) * 255);
+      int g;
+      if (direction == 0) {
+        g = int((float(y)/hmap.height) * time_length) - random_amount + int(random(random_amount));
+      } else {
+        g = int(((height - float(y))/hmap.height) * time_length) - random_amount + int(random(random_amount));
+      }
       int argb = 255 << 24 | g << 16 | g << 8 | g; 
-      hmap.pixels[x + y*width] = argb;
+      hmap.pixels[x*height + y] = argb;
     }
   }
   hmap.updatePixels();
   return hmap;
 }
 
-PImage makeVertMap() {
+PImage makeHorMap() {
    //create vertical gradient map
   PImage dmap = createImage(width, height, RGB);
   dmap.loadPixels();
   // 255 is max, more than 255 will leave gaps
-  int time_length = int(random(70,256));
+  int direction = int(random(2));
+  print("direction : ", direction, " ");
+  int time_length = int(random(70, 256));
   int random_amount = 1;
-  if (random(10) < 2){
-  random_amount = int(random(0,10));
+  if (random(10) < 2) {
+    random_amount = int(random(0, 10));
   }
   println("times length is :", time_length, " - random_amount is : ", random_amount);
+  int g;
   for (int x = 0; x < dmap.width; x++) {
     for (int y = 0; y < dmap.height; y++) {
-      int g = int((float(dmap.width - x)/width)*time_length) - random_amount + int(random(random_amount));// + (float(dmap.height - y)/height))/2 * 255) + random(0, 1));
+      if (direction == 0) {
+        g = int((float(dmap.width - x)/width)*time_length) - random_amount + int(random(random_amount));// + (float(dmap.height - y)/height))/2 * 255) + random(0, 1));
+      } else {
+        g = int((float(x)/width)*time_length) - random_amount + int(random(random_amount));// + (float(dmap.height - y)/height))/2 * 255) + random(0, 1));
+      }
+      int argb = 255 << 24 | g << 16 | g << 8 | g; 
+      dmap.pixels[x*height + y] = argb;
+    }
+  }
+  dmap.updatePixels();
+  return dmap;
+}
+
+PImage makeCurrentFrameMap() {
+  PImage currentFrame = createImage(width, height, RGB);
+  currentFrame.loadPixels();
+  for (int i = 0; i < pixels.length; i++) {
+    currentFrame.pixels[i] = pixels[i];
+  }
+  currentFrame.updatePixels();
+  return currentFrame;
+}
+
+PImage makeVertMap() {
+  //create vertical gradient map
+  PImage dmap = createImage(width, height, RGB);
+  dmap.loadPixels();
+  // 255 is max, more than 255 will leave gaps
+  int direction = int(random(2));
+  print("direction : ", direction, " ");
+  int time_length = int(random(70, 256));
+  int random_amount = 1;
+  if (random(10) < 2) {
+    random_amount = int(random(0, 10));
+  }
+  println("times length is :", time_length, " - random_amount is : ", random_amount);
+  int g;
+  for (int x = 0; x < dmap.width; x++) {
+    for (int y = 0; y < dmap.height; y++) {
+      if (direction == 0) {
+        g = int((float(dmap.width - x)/width)*time_length) - random_amount + int(random(random_amount));// + (float(dmap.height - y)/height))/2 * 255) + random(0, 1));
+      } else {
+        g = int((float(x)/width)*time_length) - random_amount + int(random(random_amount));// + (float(dmap.height - y)/height))/2 * 255) + random(0, 1));
+      }
       int argb = 255 << 24 | g << 16 | g << 8 | g; 
       dmap.pixels[x + y*width] = argb;
     }
   }
   dmap.updatePixels();
-  return dmap; 
-}
-
-PImage makeRandMap() {
-  //create random gradient map
-  PImage rmap = createImage(width, height, RGB);
-  rmap.loadPixels();
-  for (int x = 0; x < rmap.width; x++) {
-    for (int y = 0; y < rmap.height; y++) {
-      int g = int(random(1.0)*255);
-      int argb = 255 << 24 | g << 16 | g << 8 | g; 
-      rmap.pixels[x + y*width] = argb;
-    }
-  }
-  rmap.updatePixels();
-  return rmap;
+  return dmap;
 }
 
 PImage makeDoubleNoiseMap() {
@@ -56,8 +131,10 @@ PImage makeDoubleNoiseMap() {
   PImage nmap = makeNoiseMap();
   PImage nmap2 = makeNoiseMap();
   //PImage finalMap = nmap * nmap2;
-  nmap.blend(nmap2, 0, 0, 33, 100, 67, 0, 33, 100, ADD);
-  nmap.updatePixels();
+  for (int i =0; i < nmap.pixels.length; i++){
+    nmap.pixels[i] = (nmap.pixels[i]|nmap2.pixels[i]);
+  }
+    nmap.updatePixels();
   return nmap;
 }
 
@@ -68,7 +145,7 @@ PImage makeNoiseMap() {
   // Start xoff at 0
   float detail = random(0.01, 0.15);
   print("detail : ", detail, " - ");
-  float increment = pow(random(0.09125, 0.35), 2);
+  float increment = pow(random(0.09125, 0.25), 2);
   println("increment : ", increment);
   noiseDetail(8, detail);
 
@@ -96,10 +173,10 @@ PImage makeDiagMap() {
   PImage dmap = createImage(width, height, RGB);
   dmap.loadPixels();
   // 255 is max, more than 255 will leave gaps
-  int time_length = int(random(70,256));
+  int time_length = int(random(70, 256));
   int random_amount = 1;
-  if (random(10) < 2){
-  random_amount = int(random(0,10));
+  if (random(10) < 2) {
+    random_amount = int(random(0, 10));
   }
   println("times length is :", time_length, " - random_amount is : ", random_amount);
   for (int x = 0; x < dmap.width; x++) {
@@ -117,23 +194,23 @@ PImage makeBoxMap() {
   //create horizontal gradient map
   PImage bmap = createImage(width, height, RGB);
   bmap.loadPixels();
-  int factor1 = int(random(1,10));
-  int factor11 = int(random(1,10));
-  int factor2 = int(random(1,50) + 50);
-  int factor3 = int(random(300) + 1);
+  int factor1 = int(random(1, 10));
+  int factor11 = int(random(1, 10));
+  int factor2 = int(random(30, 90) + 50);
+  int factor3 = int(random(100) + 155);
   println("factors : ", factor1, "-", factor11, "-", factor2, "-", factor3);
   for (int x = 0; x < bmap.width; x++) {
     for (int y = 0; y < bmap.height; y++) {
       int r = x%factor3;
-      if (x % factor11 == 2) {
+      if (x % factor11 < 4) {
         r = y%255;
       }
-      if (y % factor2 == 3) {
+      if (y % factor2 < 6) {
         r = int(random(0, factor3));
       }
       int g = int((((float(bmap.width - x)/width) + (float(bmap.height - y)/height))/2 * factor3) + random(0, 1));
-      int b = int(float(g+r)*0.5);
-      int argb = 255 << 24 | r << 16 | g << 8 | b; 
+      r = (r*g)/255;
+      int argb = 255 << 24 | r << 16 | r << 8 | r; 
       bmap.pixels[x + y*width] = argb;
     }
   }
