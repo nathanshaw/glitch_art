@@ -1,4 +1,5 @@
 .DS_Store
+*.config.js
 applet
 application.linux32
 application.linux64
