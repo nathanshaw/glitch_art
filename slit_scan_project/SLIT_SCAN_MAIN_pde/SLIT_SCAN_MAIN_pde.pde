@@ -1,6 +1,9 @@
 // Raspberry Pi Version of the Slit Scan Code
 import processing.video.*;
 import java.lang.ProcessBuilder;
+import gohai.simpletweet.*;
+
+SimpleTweet simpletweet;
 Capture cam;
 
 int onPi = 0;
@@ -42,6 +45,11 @@ void setup() {
   }
   newMaps();
   frameRate(25);
+  simpletweet = new SimpleTweet(this);
+  simpletweet.setOAuthConsumerKey("YftisSMGITwVf9zyLnfz0HRVz");
+  simpletweet.setOAuthConsumerSecret("OCw264vOXl4yCVFmoisZhyxqn3ujHOUM5GapTjL22gGy4IOrcs");
+  simpletweet.setOAuthAccessToken("846790274500067329-l4RiS4s4JBP0xba355sXQYZj4kAPnA0");
+  simpletweet.setOAuthAccessTokenSecret("07OuQYM5pIMAuQ5o3axQ2HhixbHBPfIRsCLyEGPEs3K3u");
 }
 
 

@@ -1,10 +1,9 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
+StringList reds;
+reds.append("Proud to be loving Trump today!");
+reds.append("GOP Forever, proud to be american!");
+StringList blues;
+blues.append("Feel the Bern");
+blues.append("Proud to be a Democrat!");
 
 boolean isRed() {
   int totalRed = 0;
@@ -28,73 +27,13 @@ void saveScreenShot() {
   println("saved file : " + tempFileName);
   // determine if there is more red or blue and tweet accordingly
   if (isRed() == true) {
-    tweet("Red");
+    tweet(reds[random(reds.length())]);
   } else {
-    tweet("Blue");
+    tweet(blues[random[blues.length()]);
   }
 }
 
-private static String output(InputStream inputStream) throws IOException {
-  StringBuilder sb = new StringBuilder();
-  BufferedReader br = null;
-  try {
-    br = new BufferedReader(new InputStreamReader(inputStream));
-    String line = null;
-    while ((line = br.readLine()) != null) {
-      sb.append(line + System.getProperty("line.separator"));
-    }
-  } 
-  finally {
-    br.close();
-  }
-  return sb.toString();
-}
-
-void tweet(String msg) {
-  //ProcessBuilder pb = new ProcessBuilder();
-  //pb.command("/usr/local/bin/node", "/Users/nathan/workspace/glitch_art/slit_scan_project/node/bot.js");  
-  //Process p = pb.start();
-  println("------ entered tweet ---------");
-  try {
-    Process p = new ProcessBuilder("/usr/local/bin/node", "/Users/nathan/workspace/glitch_art/slit_scan_project/node/bot.js").start();
-    // InputStream shellIn = p.getInputStream();
-    /*
-    try {
-      int errorCode = p.waitFor();
-      println("process error code : ", errorCode);
-    } 
-    catch (InterruptedException t) {
-      println("interrupted exception : ", t);
-    
-    */
-    // String response = convertStreamToStr(shellIn);
-    // println(response);
-  }
-  catch (IOException e) {
-    println("I just threw a IOEception : ", e);
-  }
-  println("----- exited tweet --------");
-}
-
-public static String convertStreamToStr(InputStream is) throws IOException {
-
-  if (is != null) {
-    Writer writer = new StringWriter();
-
-    char[] buffer = new char[1024];
-    try {
-      Reader reader = new BufferedReader(new InputStreamReader(is, 
-        "UTF-8"));
-      int n;
-      while ((n = reader.read(buffer)) != -1) {
-        writer.write(buffer, 0, n);
-      }
-    } 
-    finally {
-      is.close();
-    }
-    return writer.toString();
-  } else {
-    return "";
-  }
+void tweet(String msg){
+  String tweet = simpletweet.tweetImage(get(), msg);
+  println("Posted " + tweet);
 }
