@@ -1,4 +1,149 @@
 
+void newMaps() {
+  if (mapMode == 0) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Perlin Noise: separated");
+      red_map = makeNoiseMap();
+      green_map = makeNoiseMap();
+      blue_map = makeNoiseMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Perlin Noise: not separated");
+      green_map = blue_map = red_map = makeNoiseMap();
+    }
+  }
+  if (mapMode == 1) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Vertical Maps: separated");
+      red_map = makeVertMap();
+      green_map = makeVertMap();
+      blue_map = makeVertMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Vertical Map: not separated");
+      green_map = blue_map = red_map = makeVertMap();
+    }
+  }
+  if (mapMode == 2) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Horizontal Maps: separated");
+      red_map = makeHorMap();
+      green_map = makeHorMap();
+      blue_map = makeHorMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Horizontal Maps: not separated");
+      green_map = blue_map = red_map = makeHorMap();
+    }
+  }
+  /*
+  if (mapMode == 3) {
+   if (color_separated) {
+   print("" + mapMode + " - ");
+   println("Box Masks: separated");
+   red_map = makeBoxMap();
+   green_map = makeBoxMap();
+   blue_map = makeBoxMap();
+   } else {
+   print("" + mapMode + " - ");
+   println("Box Masks: not separated");
+   green_map = blue_map = red_map = makeBoxMap();
+   }
+   }
+   */
+  if (mapMode == 3) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Double Noise - separated");
+      red_map = makeDoubleNoiseMap();
+      green_map = makeDoubleNoiseMap();
+      blue_map = makeDoubleNoiseMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Double Noise - not separated");
+      red_map = makeDoubleNoiseMap();
+      green_map = blue_map = red_map;
+    }
+  }
+  /*
+  if (mapMode == 4) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Circle map - separated");
+      red_map = makeCircleMap();
+      green_map = makeCircleMap();
+      blue_map = makeCircleMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Circle map - not separated");
+      red_map = makeCircleMap();
+      green_map = blue_map = red_map;
+    }
+  }
+  */
+  if (mapMode == 4) {
+    if (!color_separated) {
+      print("" + mapMode + " - ");
+      println("Whisk map");
+      red_map = makeWhiskMap();
+      green_map = blue_map = red_map;
+    } else {
+      print("" + mapMode + " - ");
+      println("Whisk map");
+      red_map = makeWhiskMap();
+      blue_map = makeWhiskMap();
+      green_map = makeWhiskMap();
+    }
+  }
+  if (mapMode == 5) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Vertical/Hor Maps: separated");
+      red_map = makeVertMap();
+      green_map = makeHorMap();
+      if (random(1) < 0.5) {
+        blue_map = makeHorMap();
+      } else {
+        blue_map = makeVertMap();
+      }
+    } else {
+      print("" + mapMode + " - ");
+      println("Vertical Map: not separated");
+      green_map = blue_map = red_map = makeVertMap();
+    }
+  }
+  if (mapMode == 6) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Feedback: separated");
+      red_map = makeCurrentFrameMap();
+      green_map = makeCurrentFrameMap();
+
+      blue_map = makeCurrentFrameMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Feedback: not separated");
+      green_map = blue_map = red_map = makeCurrentFrameMap();
+    }
+  }
+  if (mapMode == 7) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Diag Maps: separated");
+      red_map = makeDiagMap();
+      green_map = makeDiagMap();
+      blue_map = makeDiagMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Diag Maps: not separated");
+      green_map = blue_map = red_map = makeDiagMap();
+    }
+  }
+}
+
 PImage makeCircleMap() {
   PImage cMap = createImage(width, height, RGB);
   cMap.loadPixels();
