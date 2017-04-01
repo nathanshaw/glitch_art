@@ -1,9 +1,5 @@
-StringList reds;
-reds.append("Proud to be loving Trump today!");
-reds.append("GOP Forever, proud to be american!");
-StringList blues;
-blues.append("Feel the Bern");
-blues.append("Proud to be a Democrat!");
+StringList reds = new StringList("Proud to be loving Trump today!", "GOP Forever, proud to be american!");
+StringList blues = new StringList("Feel the Bern", "Proud to be a Democrat!");
 
 boolean isRed() {
   int totalRed = 0;
@@ -27,9 +23,9 @@ void saveScreenShot() {
   println("saved file : " + tempFileName);
   // determine if there is more red or blue and tweet accordingly
   if (isRed() == true) {
-    tweet(reds[random(reds.length())]);
+    tweet(reds.get(int(random(reds.size()))));
   } else {
-    tweet(blues[random[blues.length()]);
+    tweet(blues.get(int(random(blues.size()))));
   }
 }
 
