@@ -17,10 +17,6 @@ boolean isRed() {
 }
 
 void saveScreenShot() {
-  //save the current frame
-  String tempFileName = "/Users/nathan/workspace/glitch_art/slit_scan_project/node/output.png";
-  saveFrame(tempFileName);
-  println("saved file : " + tempFileName);
   // determine if there is more red or blue and tweet accordingly
   if (isRed() == true) {
     tweet(reds.get(int(random(reds.size()))));

@@ -1,4 +1,3 @@
-
 void newMaps() {
   if (mapMode == 0) {
     if (color_separated) {
@@ -39,21 +38,6 @@ void newMaps() {
       green_map = blue_map = red_map = makeHorMap();
     }
   }
-  /*
-  if (mapMode == 3) {
-   if (color_separated) {
-   print("" + mapMode + " - ");
-   println("Box Masks: separated");
-   red_map = makeBoxMap();
-   green_map = makeBoxMap();
-   blue_map = makeBoxMap();
-   } else {
-   print("" + mapMode + " - ");
-   println("Box Masks: not separated");
-   green_map = blue_map = red_map = makeBoxMap();
-   }
-   }
-   */
   if (mapMode == 3) {
     if (color_separated) {
       print("" + mapMode + " - ");
@@ -68,22 +52,6 @@ void newMaps() {
       green_map = blue_map = red_map;
     }
   }
-  /*
-  if (mapMode == 4) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Circle map - separated");
-      red_map = makeCircleMap();
-      green_map = makeCircleMap();
-      blue_map = makeCircleMap();
-    } else {
-      print("" + mapMode + " - ");
-      println("Circle map - not separated");
-      red_map = makeCircleMap();
-      green_map = blue_map = red_map;
-    }
-  }
-  */
   if (mapMode == 4) {
     if (!color_separated) {
       print("" + mapMode + " - ");
@@ -142,6 +110,55 @@ void newMaps() {
       green_map = blue_map = red_map = makeDiagMap();
     }
   }
+  if (mapMode == 8) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Famous Maps: separated");
+      green_map = blue_map = red_map = loadMapFromFile();
+    } else {
+      print("" + mapMode + " - ");
+      println("Famous Maps: not separated");
+      green_map = blue_map = red_map = loadMapFromFile();
+    }
+  }
+  /*
+  if (mapMode == 3) {
+   if (color_separated) {
+   print("" + mapMode + " - ");
+   println("Box Masks: separated");
+   red_map = makeBoxMap();
+   green_map = makeBoxMap();
+   blue_map = makeBoxMap();
+   } else {
+   print("" + mapMode + " - ");
+   println("Box Masks: not separated");
+   green_map = blue_map = red_map = makeBoxMap();
+   }
+   }
+  if (mapMode == 4) {
+    if (color_separated) {
+      print("" + mapMode + " - ");
+      println("Circle map - separated");
+      red_map = makeCircleMap();
+      green_map = makeCircleMap();
+      blue_map = makeCircleMap();
+    } else {
+      print("" + mapMode + " - ");
+      println("Circle map - not separated");
+      red_map = makeCircleMap();
+      green_map = blue_map = red_map;
+    }
+  }
+  */
+}
+
+void changeDifference(){
+ if(difference == 0) {
+    difference = 1; 
+ }
+ else{
+    difference = 0; 
+ }
 }
 
 PImage makeCircleMap() {
@@ -230,6 +247,20 @@ PImage makeHorMap() {
   }
   dmap.updatePixels();
   return dmap;
+}
+
+int currentImage = 0;
+int numImageMasks = 7;
+PImage loadMapFromFile() {
+  PImage fileMask = createImage(1280, 720, RGB);
+  currentImage = currentImage + 1;
+  if (currentImage >= numImageMasks) {
+    currentImage = 0;
+  }
+  String  imageName = str(currentImage) + ".jpg";
+  println("loading image : ", imageName);
+  fileMask = loadImage(imageName);
+  return fileMask;
 }
 
 PImage makeCurrentFrameMap() {
