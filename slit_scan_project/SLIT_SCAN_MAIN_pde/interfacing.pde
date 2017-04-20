@@ -2,6 +2,7 @@
 void readArduinoButtons() {
   if (arduinoPort.available() > 0) {
     val = arduinoPort.read();    
+    println("reading in : ", val);
     if (int(val) == 0) {
       increaseFrameRate();
       println("b1 : increaseing 'frame rate'");
@@ -33,6 +34,9 @@ void readArduinoButtons() {
       println("b6 : tweeting");
       saveScreenShot();
     }
+  }
+  while (arduinoPort.available() > 0){
+   println("flushing : ", arduinoPort.read());
   }
 }
 

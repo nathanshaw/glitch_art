@@ -320,9 +320,9 @@ PImage makeNoiseMap() {
   float xoff = random(0.0, 1.0);
   // Start xoff at 0
   float detail = random(0.01, 0.15);
-  print("detail : ", detail, " - ");
+  // print("detail : ", detail, " - ");
   float increment = pow(random(0.09125, 0.25), 2);
-  println("increment : ", increment);
+  // println("increment : ", increment);
   noiseDetail(8, detail);
 
   // For every x,y coordinate in a 2D space, calculate a noise value and produce a brightness value

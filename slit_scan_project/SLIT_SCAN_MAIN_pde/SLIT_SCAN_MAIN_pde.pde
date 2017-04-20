@@ -7,8 +7,9 @@ import gohai.simpletweet.*;
 SimpleTweet simpletweet;
 Capture cam;
 //fifo buffer for storing image frames
-int num_frames = 256;
-int overfill_amount = 1;
+// has to be a power of 2...
+int num_frames = 128;
+int overfill_amount = 256/num_frames;
 PImage queue[] = new PImage[num_frames*overfill_amount];
 int queue_size = num_frames*overfill_amount;
 int write_idx = 0;
@@ -45,7 +46,7 @@ void setup() {
   newMaps();
   frameRate(25);
   println(Serial.list());
-  String portName = Serial.list()[7];
+  String portName = Serial.list()[3];
   arduinoPort = new Serial(this, portName, 57600);
   simpletweet = new SimpleTweet(this);
   simpletweet.setOAuthConsumerKey("YftisSMGITwVf9zyLnfz0HRVz");
