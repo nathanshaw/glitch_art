@@ -9,10 +9,10 @@ void setup() {
   
   //Credentials
   ConfigurationBuilder cb = new ConfigurationBuilder();
-  cb.setOAuthConsumerKey("GwzZvTcCtwMl45d0fG80YfSJu");
-  cb.setOAuthConsumerSecret("BOHBhfRiKIiq7tFs5SPAwi6kNKAK0EHNNN11tz61Qx08pnfDb6");
-  cb.setOAuthAccessToken("3140490818-C4OmRTuts9FtjjqfmALBxYvYIKJjpmuoxcDEpcg");
-  cb.setOAuthAccessTokenSecret("WDbNjOFhzkePQOx3IxCs2BMU8Cp4zxJxmFlPXxLntldMU");
+  cb.setOAuthConsumerKey();
+  cb.setOAuthConsumerSecret();
+  cb.setOAuthAccessToken();
+  cb.setOAuthAccessTokenSecret();
  
   //Make the twitter object and prepare the query
   Twitter twitter = new TwitterFactory(cb.build()).getInstance();
